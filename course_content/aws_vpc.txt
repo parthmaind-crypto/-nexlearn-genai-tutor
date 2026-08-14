@@ -1,0 +1,21 @@
+Course: AWS Solutions Architect - Module 4: VPC Networking
+
+Topic: Public Subnets vs Private Subnets
+
+A Virtual Private Cloud (VPC) is divided into subnets, and each subnet is classified as either public or private based on its routing configuration.
+
+A Public Subnet is a subnet whose route table has a route pointing to an Internet Gateway (IGW). Resources launched in a public subnet, such as EC2 instances, can have public IP addresses and can send and receive traffic directly to and from the internet. Public subnets are typically used for resources that need direct internet access, such as web servers, load balancers, and bastion hosts.
+
+A Private Subnet has no direct route to an Internet Gateway. Resources in a private subnet cannot be reached directly from the internet, and they cannot initiate outbound internet connections unless traffic is routed through a NAT Gateway placed in a public subnet. Private subnets are used for resources that should never be directly exposed, such as databases, internal application servers, and backend microservices.
+
+Analogy: Think of a VPC like an office building. The public subnet is the reception area on the ground floor, accessible directly from the street (the internet). The private subnet is like the internal offices on higher floors, reachable only through the reception desk (the NAT Gateway) if someone inside needs to step out, but no one from the street can walk directly into those offices.
+
+Topic: NAT Gateway vs Internet Gateway
+
+An Internet Gateway (IGW) allows direct two-way communication between resources in a VPC and the internet. It is attached at the VPC level and used by public subnets.
+
+A NAT Gateway allows resources in a private subnet to initiate outbound connections to the internet (for example, to download software updates) while preventing the internet from initiating inbound connections to those private resources. NAT Gateways are deployed in a public subnet and require an Elastic IP address.
+
+Topic: Multi-Tier VPC Architecture
+
+A typical three-tier VPC architecture consists of: a public subnet tier hosting load balancers and bastion hosts; a private application subnet tier hosting application servers, reachable only from the public tier; and a private database subnet tier hosting RDS instances, reachable only from the application tier. This layered isolation is a core AWS security best practice, limiting the "blast radius" if any single tier is compromised.

@@ -1,0 +1,21 @@
+Course: Docker Zero to Hero - Module 3: Container Networking
+
+Topic: Docker Bridge Network
+
+By default, Docker creates a virtual network called "bridge" on the host machine. When you run a container without specifying a network, it is attached to this default bridge network. Containers on the same bridge network can communicate with each other using their container IP addresses, but this default bridge network does not support automatic DNS resolution by container name.
+
+Topic: User-Defined Bridge Networks
+
+A user-defined bridge network is a custom network you create explicitly using "docker network create". Unlike the default bridge, containers on a user-defined bridge network can resolve each other by container name automatically, which is essential for multi-container applications like a web app talking to a database container.
+
+Topic: Why a Container Can't Reach the Internet
+
+The most common causes when a container cannot reach the internet are: (1) the container is on a custom network that lacks a properly configured gateway, (2) the host machine's firewall (iptables) is blocking forwarded traffic, (3) DNS resolution is failing inside the container because /etc/resolv.conf was not populated correctly, or (4) the Docker daemon's IP forwarding setting (net.ipv4.ip_forward) is disabled on the host.
+
+Topic: Container Networking Failures and Bridge Misconfiguration
+
+Many container networking failures stem from bridge network misconfiguration for example, overlapping subnet ranges between the Docker bridge and the host's own network, which causes routing conflicts. Running "docker network inspect" on the relevant network shows the subnet, gateway, and connected containers, and is the standard first diagnostic step.
+
+Topic: Port Mapping
+
+Port mapping (using the -p flag, e.g., -p 8080:80) allows traffic arriving on a host port to be forwarded into a container port. Without an explicit port mapping, a container's internal services are not reachable from outside the Docker host, even if the container itself has working internet access.

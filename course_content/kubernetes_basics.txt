@@ -1,0 +1,21 @@
+Course: Kubernetes Fundamentals - Module 2: Core Concepts
+
+Topic: Pods
+
+A Pod is the smallest deployable unit in Kubernetes. A Pod represents one or more tightly coupled containers that share the same network namespace and storage volumes. Most Pods run a single container, but multi-container Pods are used for sidecar patterns, such as a logging agent running alongside a main application container.
+
+Topic: Deployments
+
+A Deployment is a higher-level Kubernetes object that manages a set of identical Pods, called a ReplicaSet. Deployments handle rolling updates, rollbacks, and self-healing if a Pod crashes, Kubernetes automatically creates a replacement Pod to maintain the desired replica count.
+
+Topic: Services
+
+A Service provides a stable network endpoint for a set of Pods, since individual Pod IP addresses change whenever Pods are recreated. A ClusterIP Service exposes the Pods only within the cluster. A NodePort Service exposes the Pods on a static port on every node. A LoadBalancer Service provisions an external cloud load balancer, typically used to expose an application to the internet.
+
+Topic: ConfigMaps and Secrets
+
+ConfigMaps store non-sensitive configuration data as key-value pairs, which Pods can consume as environment variables or mounted files. Secrets are similar but intended for sensitive data such as API keys and passwords, and are stored base64-encoded (not encrypted by default, so additional encryption-at-rest configuration is recommended for production clusters).
+
+Topic: Horizontal Pod Autoscaling
+
+The Horizontal Pod Autoscaler (HPA) automatically increases or decreases the number of Pod replicas in a Deployment based on observed metrics, most commonly CPU utilization. This allows a Kubernetes application to handle variable traffic loads without manual intervention.
